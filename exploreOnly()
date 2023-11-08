@@ -1,4 +1,4 @@
-# Explore Only 
+# Explore Only
 
 # Import random in order to generate random numbers
 
@@ -9,28 +9,28 @@ m1 = [7, 4, 10, 5]
 d1 = [3, 10, 6, 2]
 
 
-#Generating random happiness
+# Generating random happiness
 
-def h(p1:int,p2:int)->int: # get a random happiness
-    happy = random.normalvariate(p1,p2)
+def h(p1: int, p2: int) -> float:  # get a random happiness
+    happy = random.normalvariate(p1, p2)
     return happy
-
 
 
 # The function simulates people exploring different cafeterias, initializing a variable result to store the total happiness
 # The code uses a for loop to go over each cafeteria and a while loop to execute a 50-day simulation for each cafeteria.
-# Every day, it executes the h function for the current cafeteria using the parameters from p1 and p2. 
+# Every day, it executes the h function for the current cafeteria using the parameters from p1 and p2.
 # It subsequently adds the happiness value that was created to the outcome, decrementing the days counter by 1 for each day.
-def exploreOnly()->float: 
+def exploreOnly() -> float:
     result = 0
-    for cafeteria in range(len(p1)):
+    for cafeteria in range(len(m1)):
         days = 50
         while days > 0:
-            h2 = h(m1[cafeteria],d1[cafeteria])
-            days = days -1
-            result = result + h2
-    
+            happiness = h(m1[cafeteria], d1[cafeteria])
+            days -= 1
+            result += happiness
+
     return result
+
 
 # Testing out the function
 print(exploreOnly())
