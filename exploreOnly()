@@ -21,16 +21,16 @@ def h(p1:int,p2:int)->int: # get a random happiness
 # The code uses a for loop to go over each cafeteria and a while loop to execute a 50-day simulation for each cafeteria.
 # Every day, it executes the h function for the current cafeteria using the parameters from p1 and p2. 
 # It subsequently adds the happiness value that was created to the outcome, decrementing the days counter by 1 for each day.
-def exploreOnly(p1:list, p2:list)->list: 
+def exploreOnly()->float: 
     result = 0
     for cafeteria in range(len(p1)):
         days = 50
         while days > 0:
-            h2 = h(p1[cafeteria],p2[cafeteria])
+            h2 = h(m1[cafeteria],d1[cafeteria])
             days = days -1
             result = result + h2
     
     return result
 
 # Testing out the function
-print(exploreOnly(m1, d1))
+print(exploreOnly())
