@@ -1,1 +1,49 @@
+def simulate_strategies(t, e=10):
+    total_happiness_exploit = 0
+    total_happiness_explore = 0
+    total_happiness_eGreedy = 0
+    optimal_happiness = t * 10# This is the optimum happiness
+# Calculate the total happiness of each strategy
+    for i in range(t):
+        happiness_exploit = exploitOnly()
+        happiness_explore = exploreOnly()
+        happiness_eGreedy = eGreedy(e=10)
 
+        total_happiness_exploit += happiness_exploit
+        total_happiness_explore += happiness_explore
+        total_happiness_eGreedy += happiness_eGreedy
+# Calculate the expect_happiness of each strategy
+# t is the number of trials
+# Total value divided by t will be the average value
+    expected_happiness_exploit = exploitOnly()
+    expected_happiness_explore = exploreOnly()
+    expected_happiness_eGreedy = eGreedy(e=10)
+
+    simulated_happiness_exploit = total_happiness_exploit / t
+    simulated_happiness_explore = total_happiness_explore / t
+    simulated_happiness_eGreedy = total_happiness_eGreedy / t
+# Calculate the simulated_regret values of each strategy
+    simulated_regret_exploit = optimal_happiness - simulated_happiness_exploit
+    simulated_regret_explore = optimal_happiness - simulated_happiness_explore
+    simulated_regret_eGreedy = optimal_happiness - simulated_happiness_eGreedy
+# Print all the values
+    print(f"Optimum Happiness: {optimal_happiness}\n")
+    print("Exploit-Only:")
+    print(f"Expected Happiness: {expected_happiness_exploit}")
+    print(f"Expected Regret: {optimal_happiness - expected_happiness_exploit} ")
+    print(f"Simulated Happiness: {total_happiness_exploit / t}")
+    print(f"Simulated Regret: {simulated_regret_exploit}\n")
+
+    print("Explore-Only:")
+    print(f"Expected Happiness: {expected_happiness_explore}")
+    print(f"Expected Regret: {optimal_happiness - expected_happiness_explore}")
+    print(f"Simulated Happiness: {total_happiness_explore / t}")
+    print(f"Simulated Regret: {simulated_regret_explore}\n")
+
+    print(f"eGreedy (e={e}):")
+    print(f"Expected Happiness: {expected_happiness_eGreedy}")
+    print(f"Expected Happiness: {optimal_happiness - expected_happiness_eGreedy}")
+    print(f"Simulated Happiness: {total_happiness_eGreedy / t}")
+    print(f"Simulated Regret: {simulated_regret_eGreedy}\n")
+
+simulate_strategies(200,e=10)
