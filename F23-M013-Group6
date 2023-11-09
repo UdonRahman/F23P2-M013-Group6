@@ -3,34 +3,31 @@
 # Task 2 exploitOnly() - Abdul
 
 import random
+
 m1 = [7, 4, 10, 5]
 d1 = [3, 10, 6, 2]
-def h(p1:int,p2:int)->int: 
-    happy = random.normalvariate(p1,p2)
-    return happy
-eo = []
-def nh(plist1:list,plist2:list)->list: 
-    for index in range(len(plist1)):
-        h2 = h(plist1[index],plist2[index])
-        eo.append(h2)
-    return eo
-nh(m1,d1)
-def exploitOnly(p1:list)->int: 
-    highest = 0
-    curr_i = 0
-    result = 0
-    r_days = 196
-    for index, item in enumerate(p1):
-        result = result + item
-        if item > highest:
-            highest = item
-            curr_i = index
-    while r_days > 0:
-        eh = (h(m1[curr_i], d1[curr_i]))
-        result = result + eh
-        r_days = r_days - 1
-    return result
 
+
+# get a random happiness
+def h(p1: int, p2: int) -> float:
+    happy = random.normalvariate(p1, p2)
+    return happy
+def exploitOnly() -> float:
+    t_happiness = 0
+    highest_happiness = 0
+    happiness = 0
+    remaining_days = 196
+    c_cafe = 0
+    for index in range(len(m1)):
+        happiness = h(m1[index], d1[index])
+        t_happiness += happiness
+        if happiness > highest_happiness:
+            highest_happiness = happiness
+            c_cafe = index
+    while remaining_days > 0:
+        t_happiness += h(m1[c_cafe], d1[c_cafe])
+        remaining_days -= 1
+    return t_happiness
 print(exploitOnly(eo))
 
 # Task 3 eGreedy - Anahita 
