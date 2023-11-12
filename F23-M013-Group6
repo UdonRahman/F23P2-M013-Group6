@@ -3,17 +3,11 @@ import random
 m1 = [7, 4, 10, 5]
 d1 = [3, 10, 6, 2]
 
-explore_expected = 0
-for item in m1:
-    explore_expected += item * 50
-
-exploit_expected = max(m1) * 196
-for item in m1:
-    exploit_expected += item
 
 def h(p1: int, p2: int) -> float:
     happy = random.normalvariate(p1, p2)
     return happy
+
 
 # Task 1 exploreOnly() - Ashley
 def exploreOnly() -> float:
@@ -26,6 +20,7 @@ def exploreOnly() -> float:
             result += happiness
 
     return result
+
 
 # Task 2 exploitOnly() - Abdul
 
@@ -46,6 +41,7 @@ def exploitOnly() -> float:
         remaining_days -= 1
     return t_happiness
 
+
 # Task 3 eGreedy - Anahita
 
 def eGreedy(e=10) -> float:
@@ -64,17 +60,17 @@ def eGreedy(e=10) -> float:
     for i in range(196):  # for remaining 196 days after visiting 4 cafeterias for 4 days
         r = random.random()  # generates random value between 0 and 1
         # r will be used to determine whether to go to random cafeteria or best cafeteria
-        if r < e/100:  # visit random cafeteria
+        if r < e / 100:  # visit random cafeteria
             a = random.randint(1, 4)  # randomly generate number between 1-4 to decide which cafeteria to visit
             cafe_name = cafeterias[a]  # list storing cafeteria values for the cafeteria number obtained
-            cafe_name.append(random.normalvariate(m1[a-1], d1[a-1]))
+            cafe_name.append(random.normalvariate(m1[a - 1], d1[a - 1]))
             # appends happiness value to the list of the cafeteria visited
         else:  # visit best cafeteria
-            list_of_avgs = [sum(c1h)/len(c1h), sum(c2h)/len(c2h), sum(c3h)/len(c3h), sum(c4h)/len(c4h)]
+            list_of_avgs = [sum(c1h) / len(c1h), sum(c2h) / len(c2h), sum(c3h) / len(c3h), sum(c4h) / len(c4h)]
             # list of average values of each cafeteria
             cafe_num = list_of_avgs.index(max(list_of_avgs)) + 1
             # number of the cafeteria with the highest average happiness value, such as cafeteria 1, 2, 3 or 4
-            cafeterias[cafe_num].append(random.normalvariate(m1[cafe_num-1], d1[cafe_num-1]))
+            cafeterias[cafe_num].append(random.normalvariate(m1[cafe_num - 1], d1[cafe_num - 1]))
             # appends new calculated happiness value to the happiness list of the best cafeteria
     total_happiness = sum(c1h) + sum(c2h) + sum(c3h) + sum(c4h)
     # adds the sum of happiness values for each cafeteria
@@ -82,14 +78,24 @@ def eGreedy(e=10) -> float:
     # can use round() function to limit the number of digits after decimal
     # return round(total_happiness, 2)
 
+
 # Task 4 simulation - Zichen
 
 def simulate_strategies(t, e=10):
+    exploit_egreedy = (e / 100) * 200 * 1 / 4 * (m1[0] + m1[1] + m1[2] + m1[3]) + ((100 - e) / 100) * 200 * max(m1)
+    explore_expected = 0
+    for item in m1:
+        explore_expected += item * 50
+
+    exploit_expected = max(m1) * 196
+    for item in m1:
+        exploit_expected += item
+
     total_happiness_exploit = 0
     total_happiness_explore = 0
     total_happiness_eGreedy = 0
-    optimal_happiness = t * max(m1) # This is the optimum happiness
-# Calculate the total happiness of each strategy
+    optimal_happiness = t * max(m1)  # This is the optimum happiness
+    # Calculate the total happiness of each strategy
     for i in range(t):
         happiness_exploit = exploitOnly()
         happiness_explore = exploreOnly()
@@ -98,39 +104,39 @@ def simulate_strategies(t, e=10):
         total_happiness_exploit += happiness_exploit
         total_happiness_explore += happiness_explore
         total_happiness_eGreedy += happiness_eGreedy
-# Calculate the expect_happiness of each strategy
-# t is the number of trials
-# Total value divided by t will be the average value
+    # Calculate the expect_happiness of each strategy
+    # t is the number of trials
+    # Total value divided by t will be the average value
     expected_happiness_exploit = exploit_expected
     expected_happiness_explore = explore_expected
-    expected_happiness_eGreedy = eGreedy(e=10)
+    expected_happiness_eGreedy = exploit_egreedy
 
     simulated_happiness_exploit = total_happiness_exploit / t
     simulated_happiness_explore = total_happiness_explore / t
     simulated_happiness_eGreedy = total_happiness_eGreedy / t
-# Calculate the simulated_regret values of each strategy
+    # Calculate the simulated_regret values of each strategy
     simulated_regret_exploit = optimal_happiness - simulated_happiness_exploit
     simulated_regret_explore = optimal_happiness - simulated_happiness_explore
     simulated_regret_eGreedy = optimal_happiness - simulated_happiness_eGreedy
-# Print all the values
-    print(f"Optimum Happiness: "+ "%.2f"%(optimal_happiness)+"\n")
+    # Print all the values
+    print(f"Optimum Happiness: " + "%.2f" % (optimal_happiness) + "\n")
     print("Exploit-Only:")
-    print("Expected Happiness:" + "%.2f"%expected_happiness_exploit)
-    print("Expected Regret: " + "%.2f"%(optimal_happiness - expected_happiness_exploit))
-    print("Simulated Happiness: " + "%.2f"%(total_happiness_exploit / t))
-    print("Simulated Regret: " + "%.2f"%(simulated_regret_exploit) + "\n")
+    print("Expected Happiness:" + "%.2f" % expected_happiness_exploit)
+    print("Expected Regret: " + "%.2f" % (optimal_happiness - expected_happiness_exploit))
+    print("Simulated Happiness: " + "%.2f" % (total_happiness_exploit / t))
+    print("Simulated Regret: " + "%.2f" % (simulated_regret_exploit) + "\n")
 
     print("Explore-Only:")
-    print("Expected Happiness:" + "%.2f"%expected_happiness_explore)
-    print("Expected Regret:" + "%.2f"%(optimal_happiness - expected_happiness_explore))
-    print("Simulated Happiness:" + "%.2f"%(total_happiness_explore / t))
-    print(f"Simulated Regret: "+ "%.2f"%(simulated_regret_explore)+"\n")
+    print("Expected Happiness:" + "%.2f" % expected_happiness_explore)
+    print("Expected Regret:" + "%.2f" % (optimal_happiness - expected_happiness_explore))
+    print("Simulated Happiness:" + "%.2f" % (total_happiness_explore / t))
+    print(f"Simulated Regret: " + "%.2f" % (simulated_regret_explore) + "\n")
 
     print(f"eGreedy (e={e}):")
-    print("Expected Happiness: " + "%.2f"%expected_happiness_eGreedy)
-    print("Expected Regret: "+ "%.2f"%(optimal_happiness - expected_happiness_eGreedy))
-    print(f"Simulated Happiness: "+ "%.2f"%(total_happiness_eGreedy / t))
-    print(f"Simulated Regret: "+ "%.2f"%(simulated_regret_eGreedy)+ "\n")
-simulate_strategies(200,e=10)
+    print("Expected Happiness: " + "%.2f" % expected_happiness_eGreedy)
+    print("Expected Regret: " + "%.2f" % (optimal_happiness - expected_happiness_eGreedy))
+    print(f"Simulated Happiness: " + "%.2f" % (total_happiness_eGreedy / t))
+    print(f"Simulated Regret: " + "%.2f" % (simulated_regret_eGreedy) + "\n")
 
 
+simulate_strategies(200, e=10)
