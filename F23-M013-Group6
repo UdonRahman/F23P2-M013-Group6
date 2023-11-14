@@ -94,7 +94,7 @@ def simulate_strategies(t, e=10):
     total_happiness_exploit = 0
     total_happiness_explore = 0
     total_happiness_eGreedy = 0
-    optimal_happiness = t * max(m1)  # This is the optimum happiness
+    optimal_happiness = 200 * max(m1)  # This is the optimum happiness
     # Calculate the total happiness of each strategy
     for i in range(t):
         happiness_exploit = exploitOnly()
